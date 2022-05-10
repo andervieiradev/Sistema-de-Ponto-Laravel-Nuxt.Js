@@ -21,13 +21,12 @@ return new class extends Migration
 
             $table->integer('document')->unique();
             $table->string('password');
-            $table->string('name');
-            $table->string('birth_date');
+            $table->timestamp('birth_date');
 
-            $table->string('cep');
+            $table->integer('cep');
             $table->string('street');
-            $table->string('number');
-            $table->string('number');
+            $table->integer('number');
+            $table->string('complement')->nullable();
             $table->string('neighborhood');
             $table->string('city');
             $table->string('state');

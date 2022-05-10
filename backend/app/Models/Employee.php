@@ -21,6 +21,16 @@ class Employee extends Authenticatable
         'name',
         'email',
         'password',
+        'document',
+        'birth_date',
+        'cep',
+        'street',
+        'number',
+        'complement',
+        'neighborhood',
+        'city',
+        'state',
+        'country',
     ];
 
     /**
@@ -40,5 +50,6 @@ class Employee extends Authenticatable
      */
     protected $casts = [
         'email_verified_at' => 'datetime',
+        'birth_date' => 'datetime',
     ];
 }
