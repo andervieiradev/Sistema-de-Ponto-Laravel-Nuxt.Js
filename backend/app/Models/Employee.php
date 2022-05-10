@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
@@ -53,4 +54,22 @@ class Employee extends Authenticatable
         'email_verified_at' => 'datetime',
         'birth_date' => 'datetime',
     ];
+
+
+    protected function document(): Attribute
+    {
+        return new Attribute(
+            set: fn ($value) => preg_replace("/\D/", '', $value),
+            get: fn ($value) =>  preg_replace("/(\d{3})(\d{3})(\d{3})(\d{2})/", "\$1.\$2.\$3-\$4", $value),
+        );
+    }
+
+    protected function cep(): Attribute
+    {
+        return new Attribute(
+            set: fn ($value) => preg_replace("/\D/", '', $value),
+            get: fn ($value) =>  preg_replace("/(\d{5})(\d{3})/", "\$1-\$2", $value),
+        );
+    }
+
 }

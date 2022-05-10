@@ -21,11 +21,11 @@ return new class extends Migration
 
             $table->string('job_position');
 
-            $table->integer('document')->unique();
+            $table->string('document')->unique();
             $table->string('password');
             $table->timestamp('birth_date');
 
-            $table->integer('cep');
+            $table->string('cep');
             $table->string('street');
             $table->integer('number');
             $table->string('complement')->nullable();

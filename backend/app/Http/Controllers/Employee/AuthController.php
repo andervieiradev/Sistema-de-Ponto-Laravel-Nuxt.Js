@@ -32,7 +32,7 @@ class AuthController extends Controller
 
     public function me(Request $request)
     {
-        $employee = Auth::guard('employees')->user()->only(['id', 'name', 'email', 'email_verified_at']);
+        $employee = Auth::guard('employees')->user();
 
         return response()->json([
             'user' => $employee,
