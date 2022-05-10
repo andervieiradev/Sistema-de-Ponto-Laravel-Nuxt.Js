@@ -40,7 +40,7 @@
 <script>
 export default {
   layout: 'Onboarding',
-  auth: 'guest',
+  auth: false,
 
   data() {
     return {
@@ -60,7 +60,7 @@ export default {
       await this.$auth.loginWith('admin', {
         data: this.form
       }).then(response => {
-        this.$router.push('/admin/dashboard')
+        this.$router.push('/admin')
       })
       .catch((e) => {
         this.errors = e.response.data.message
@@ -71,7 +71,6 @@ export default {
   }
 }
 </script>
-
 
 <style scoped>
     .input{

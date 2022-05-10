@@ -30,7 +30,7 @@ export default class CustomScheme extends LocalScheme {
       // Transform the user object
       const customUser = {
         ...response.data.user,
-        // role:  ['admin']
+        scope: ['employee']
       }
 
       this.$auth.setUser(customUser)

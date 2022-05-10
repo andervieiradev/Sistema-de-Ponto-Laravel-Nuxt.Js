@@ -2,37 +2,9 @@
 <div class="py-12">
   <div class="max-w-7xl mx-auto px-2 sm:px-6 lg:px-8">
 
-      <div v-if="!user.email_verified_at" class="px-4 py-3 mb-4 bg-sky-100 rounded border border-l-4 border-sky-900 md:flex justify-between" role="alert">
-          <div>
-              <div class="flex items-center">
-                  <svg class="mr-2 w-4 h-4 text-sky-700 font-semibold" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z" clip-rule="evenodd"></path></svg>
-                  <h3 class="text-lg font-medium text-gray-700 ">Verificação de e-mail</h3>
-              </div>
-              <div class="mb-2 text-sm text-gray-700">
-                  Confirme sua conta no e-mail que enviamos para: {{ user.email }}
-              </div>
-          </div>
-
-          <div class="flex align-middle items-center ">
-
-              <button
-                  v-if="formUserVerified.btn"
-                  :disabled="formUserVerified.processing"
-                  type="submit"
-                  class="text-white bg-sky-700 hover:bg-gray-800 focus:ring-4 focus:ring-gray-300 font-medium rounded-lg text-xs px-3 py-1.5 mr-2 text-center inline-flex items-center" @click.prevent="submitFormUserVerified">
-                  <svg v-show="formUserVerified.processing" class="animate-spin m-auto h-5 w-5 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
-                      <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
-                      <path class="opacity-80" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
-                  </svg>
-                  <span v-show="!formUserVerified.processing" class="flex">
-                      <svg xmlns="http://www.w3.org/2000/svg" class="-ml-0.5 mr-2  h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-                          <path stroke-linecap="round" stroke-linejoin="round" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
-                      </svg>
-                      Reenviar E-mail
-                  </span>
-              </button>
-          </div>
-      </div>
+      {{ $auth.user.scope }}
+      {{ $auth.hasScope('admin') }}
+      {{ $auth.hasScope('employee') }}
 
       <div>
           <div class="md:grid md:grid-cols-3 md:gap-6">
@@ -122,27 +94,11 @@
 
 export default {
   layout: 'Dashboard',
+  middleware: ['isAdmin'],
   data() {
       return {
           user: this.$auth.user,
-          formUserVerified: {
-            btn: true,
-            processing: false,
-          },
-          products: []
       };
   },
-  methods: {
-      async submitFormUserVerified(){
-        this.formUserVerified.processing = true
-
-        await this.$axios.post('/sendEmailVerification').then(response => {
-            this.$toast.success(response.data.message)
-            this.formUserVerified.btn = false
-        })
-
-        this.formUserVerified.processing = false
-      },
-  }
 }
 </script>

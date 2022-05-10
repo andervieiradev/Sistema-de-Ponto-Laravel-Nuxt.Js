@@ -56,24 +56,8 @@ export default {
 
   auth: {
     strategies: {
-      local: {
-        endpoints: {
-          login: { url: '/login', method: 'post', propertyName: 'token' },
-          logout: { url: '/logout', method: 'post' },
-          user: { url: '/me', method: 'get', propertyName: 'user' }
-        },
-        token: {
-          property : 'token' ,
-          required : true ,
-          type : 'Bearer'
-        },
-        user: {
-          property: 'user',
-          autoFetch : true
-        }
-      },
       admin: {
-        scheme: '~/schemes/customScheme',
+        scheme: '~/schemes/adminScheme',
         endpoints: {
           login: { url: '/admin/login', method: 'post', propertyName: 'token' },
           logout: { url: '/admin/logout', method: 'post' },
@@ -89,13 +73,30 @@ export default {
           autoFetch : true
         }
       },
+      employee: {
+        scheme: '~/schemes/employeeScheme',
+        endpoints: {
+          login: { url: '/employee/login', method: 'post', propertyName: 'token' },
+          logout: { url: '/employee/logout', method: 'post' },
+          user: { url: '/employee/me', method: 'get', propertyName: 'user' }
+        },
+        token: {
+          property : 'token' ,
+          required : true ,
+          type : 'Bearer'
+        },
+        user: {
+          property: 'user',
+          autoFetch : true
+        }
+      },
 
     },
-    rewriteRedirects: true,
+    rewriteRedirects: false,
     redirect: {
       login: "/",
       logout: "/",
-      home: "/admin/dashboard",
+      home: "/",
     },
   },
 
@@ -122,4 +123,5 @@ export default {
 
   },
 
+  SSR: true
 }
