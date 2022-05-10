@@ -23,6 +23,7 @@ class Employee extends Authenticatable
         'password',
         'document',
         'birth_date',
+        'job_position',
         'cep',
         'street',
         'number',
