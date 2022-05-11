@@ -90,7 +90,7 @@
                                 </span>
                             </th>
                             <th scope="col" class="w-3/12 font-bold text-sm font-medium employeeing-wider text-left text-white uppercase">
-                                <span class="inline-flex py-3 px-6 w-full justify-between">Administrador</span>
+                                <span class="inline-flex py-3 px-6 w-full justify-between">Gestor</span>
                             </th>
 
                             <th scope="col" class="font-bold text-sm font-medium px-6 py-4 text-right"></th>

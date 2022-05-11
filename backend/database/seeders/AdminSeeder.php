@@ -18,11 +18,27 @@ class AdminSeeder extends Seeder
     {
 
         $data = array(
-            'name' => 'Administrador1',
-            'email' => 'admin@admin.com',
-            'email_verified_at' => now(),
-            'password' => 'password',
-            'remember_token' => Str::random(10),
+            array(
+                'name' => 'Administrador',
+                'email' => 'admin@admin.com',
+                'email_verified_at' => now(),
+                'password' => bcrypt('password'),
+                'remember_token' => Str::random(10),
+            ),
+            array(
+                'name' => 'Administrador1',
+                'email' => 'admin1@admin.com',
+                'email_verified_at' => now(),
+                'password' => bcrypt('password'),
+                'remember_token' => Str::random(10),
+            ),
+            array(
+                'name' => 'Administrador2',
+                'email' => 'admin2@admin.com',
+                'email_verified_at' => now(),
+                'password' => bcrypt('password'),
+                'remember_token' => Str::random(10),
+            )
         );
 
         Admin::insert($data);

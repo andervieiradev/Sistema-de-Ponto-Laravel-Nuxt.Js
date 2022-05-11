@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\Admin\AuthController;
 use App\Http\Controllers\Admin\EmployeeController;
+use App\Http\Controllers\Admin\PointController;
 use Illuminate\Support\Facades\Route;
 
 Route::prefix('admin')->group(function(){
@@ -23,6 +24,13 @@ Route::prefix('admin')->group(function(){
             Route::post('/', [EmployeeController::class, 'store'])->name('store');
             Route::put('/{employee}', [EmployeeController::class, 'update'])->name('update');
             Route::delete('/{employee}', [EmployeeController::class, 'destroy'])->name('destroy');
+
+        });
+
+        Route::group(['prefix'=>'point','as'=>'point.'], function(){
+
+
+            Route::get('/listAll', [PointController::class, 'listAll'])->name('listAll');
 
         });
 

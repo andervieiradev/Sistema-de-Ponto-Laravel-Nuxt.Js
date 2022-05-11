@@ -1,99 +1,115 @@
 <template>
-<div class="py-12">
-  <div class="max-w-7xl mx-auto px-2 sm:px-6 lg:px-8">
+  <div class="py-12">
+    <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
 
-      <div>
-          <div class="md:grid md:grid-cols-3 md:gap-6">
-              <div class="md:col-span-1">
-                  <div class="px-4 sm:px-0">
-                      <h3 class="text-lg font-medium leading-6 text-gray-900">Profile</h3>
-                      <p class="mt-1 text-sm text-gray-600">This information will be displayed publicly so be careful what you share.</p>
-                  </div>
-              </div>
-              <div class="mt-5 md:mt-0 md:col-span-2">
-                  <form action="#" method="POST">
-                      <div class="shadow sm:rounded-md sm:overflow-hidden">
-                      <div class="px-4 py-5 bg-white space-y-6 sm:p-6">
-                          <div class="grid grid-cols-3 gap-6">
-                            <div class="col-span-3 sm:col-span-2">
-                                <label for="company-website" class="block text-sm font-medium text-gray-700"> Website </label>
-                                  <div class="mt-1 flex rounded-md shadow-sm">
-                                    <span class="inline-flex items-center px-3 rounded-l-md border border-r-0 border-gray-300 bg-gray-50 text-gray-500 text-sm"> http:// </span>
-                                    <input id="company-website" type="text" name="company-website" class="focus:ring-sky-500 focus:border-sky-500 flex-1 block w-full rounded-none rounded-r-md sm:text-sm border-gray-300" placeholder="www.example.com">
-                                </div>
-                            </div>
-                          </div>
+      <div class="p-2 md:p-0">
+        <div class="md:grid md:grid-cols-3 md:gap-6">
+          <div class="md:col-span-3">
+            <h1 class="  text-2xl font-medium">Últimos Pontos</h1>
+            <h2 class="mb-3 text-md font-normal">Todos os funcionários</h2>
 
-                          <div>
-                          <label for="about" class="block text-sm font-medium text-gray-700"> About </label>
-                          <div class="mt-1">
-                              <textarea id="about" name="about" rows="3" class="shadow-sm focus:ring-sky-500 focus:border-sky-500 mt-1 block w-full sm:text-sm border border-gray-300 rounded-md" placeholder="you@example.com"></textarea>
-                          </div>
-                          <p class="mt-2 text-sm text-gray-500">Brief description for your profile. URLs are hyperlinked.</p>
-                          </div>
+            <div class="bg-white overflow-auto shadow-xl rounded-lg scrollbar scrollbar-thin scrollbar-thumb-gray-400 scrollbar-track-gray-200 scrollbar-thumb-rounded scrollbar-thumb-rounded scrollbar-thumb-rounded-md">
+                <table class="min-w-full table-responsive">
+                    <thead class="border-b bg-gradient-to-r from-cyan-500 to-blue-500" >
+                        <tr class="text-white">
+                            <th scope="col" class="w-3/12 font-bold text-sm font-medium employeeing-wider text-left text-white uppercase">
+                                <span class="inline-flex py-3 px-2 w-full justify-between">#ID</span>
+                            </th>
+                            <th scope="col" class="w-3/12 font-bold text-sm font-medium employeeing-wider text-left text-white uppercase">
+                                <span class="inline-flex py-3 px-6 w-full justify-between">Nome</span>
+                            </th>
+                            <th scope="col" class="w-3/12 font-bold text-sm font-medium employeeing-wider text-left text-white uppercase">
+                                <span class="inline-flex py-3 px-6 w-full justify-between">Cargo</span>
+                            </th>
+                            <th scope="col" class="w-3/12 font-bold text-sm font-medium employeeing-wider text-left text-white uppercase">
+                                <span class="inline-flex py-3 px-6 w-full justify-between">Idade</span>
+                            </th>
+                            <th scope="col" class="w-3/12 font-bold text-sm font-medium employeeing-wider text-left text-white uppercase">
+                                <span class="inline-flex py-3 px-6 w-full justify-between">Gestor</span>
+                            </th>
+                            <th scope="col" class="w-3/12 font-bold text-sm font-medium employeeing-wider text-left text-white uppercase">
+                                <span class="inline-flex py-3 px-6 w-full justify-between">Ponto</span>
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr v-for="point in points.data" :key="point.id" class="border-b hover:bg-gray-100">
+                            <td class="px-2 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
+                                {{ point.id }}
+                            </td>
+                            <td class="text-md text-gray-900 font-medium px-6 py-4 whitespace-nowrap">
+                                {{ point.employee.name }}
+                            </td>
+                            <td class="text-md text-gray-900 font-medium px-6 py-4 whitespace-nowrap">
+                                {{ point.employee.job_position }}
+                            </td>
+                            <td class="text-md text-gray-900 font-medium px-6 py-4 whitespace-nowrap">
+                                {{ point.employee.age }}
+                            </td>
+                            <td class="text-md text-gray-900 font-medium px-6 py-4 whitespace-nowrap">
+                                {{ point.employee.admin.name }}
+                            </td>
+                            <td class="text-md text-gray-900 font-medium px-6 py-4 whitespace-nowrap">
+                                {{ point.point_date }}
+                            </td>
+                        </tr>
 
-                          <div>
-                          <label class="block text-sm font-medium text-gray-700"> Photo </label>
-                          <div class="mt-1 flex items-center">
-                              <span class="inline-block h-12 w-12 rounded-full overflow-hidden bg-gray-100">
-                              <svg class="h-full w-full text-gray-300" fill="currentColor" viewBox="0 0 24 24">
-                                  <path d="M24 20.993V24H0v-2.996A14.977 14.977 0 0112.004 15c4.904 0 9.26 2.354 11.996 5.993zM16.002 8.999a4 4 0 11-8 0 4 4 0 018 0z" />
-                              </svg>
-                              </span>
-                              <button type="button" class="ml-5 bg-white py-2 px-3 border border-gray-300 rounded-md shadow-sm text-sm leading-4 font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-sky-500">Change</button>
-                          </div>
-                          </div>
+                        <tr v-if="!points.data.length">
+                            <td colspan="6" class="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap text-center"> Sem Dados </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
 
-                          <div>
-                          <label class="block text-sm font-medium text-gray-700"> Cover photo </label>
-                          <div class="mt-1 flex justify-center px-6 pt-5 pb-6 border-2 border-gray-300 border-dashed rounded-md">
-                              <div class="space-y-1 text-center">
-                              <svg class="mx-auto h-12 w-12 text-gray-400" stroke="currentColor" fill="none" viewBox="0 0 48 48" aria-hidden="true">
-                                  <path d="M28 8H12a4 4 0 00-4 4v20m32-12v8m0 0v8a4 4 0 01-4 4H12a4 4 0 01-4-4v-4m32-4l-3.172-3.172a4 4 0 00-5.656 0L28 28M8 32l9.172-9.172a4 4 0 015.656 0L28 28m0 0l4 4m4-24h8m-4-4v8m-12 4h.02" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
-                              </svg>
-                              <div class="flex text-sm text-gray-600">
-                                  <label for="file-upload" class="relative cursor-pointer bg-white rounded-md font-medium text-sky-600 hover:text-sky-500 focus-within:outline-none focus-within:ring-2 focus-within:ring-offset-2 focus-within:ring-sky-500">
-                                  <span>Upload a file</span>
-                                  <input id="file-upload" name="file-upload" type="file" class="sr-only">
-                                  </label>
-                                  <p class="pl-1">or drag and drop</p>
-                              </div>
-                              <p class="text-xs text-gray-500">PNG, JPG, GIF up to 10MB</p>
-                              </div>
-                          </div>
-                          </div>
-                      </div>
-                      <div class="px-4 py-3 bg-gray-50 text-right sm:px-6">
-                          <button
-                            type="button"
-                            class="inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-sky-600 hover:bg-sky-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-sky-500"
-                             >
-                            Save
-                          </button>
-                      </div>
-                      </div>
-                  </form>
-              </div>
+            <Pagination class="mt-10" :links="points.links" @changePage="onChangePage" />
           </div>
+        </div>
       </div>
-
-      <div class="hidden sm:block" aria-hidden="true">
-          <div class="py-5">
-              <div class="border-t border-gray-200"></div>
-          </div>
-      </div>
+    </div>
   </div>
-</div>
 </template>
 
-<script>
 
-export default {
-  layout: 'DashboardAdmin',
-  data() {
+<script>
+  import _ from "lodash"
+
+  export default {
+    layout: 'DashboardAdmin',
+    async asyncData({ $axios }) {
       return {
-          user: this.$auth.user,
-      };
-  },
-}
+        points: await $axios.$get('/admin/point/listAll'),
+      }
+    },
+    data(){
+      return {
+        params: {
+          page: null,
+        },
+      }
+    },
+    watch: {
+      params: {
+          deep: true,
+          handler: _.throttle(async function () {
+              const params = _.pickBy(this.params)
+              this.points = await this.$axios.$get('/admin/point/listAll', {params})
+          }, 150),
+      },
+      points: {
+        deep: true,
+        handler(){
+          this.params.page = this.points.current_page
+        }
+      }
+
+    },
+    methods: {
+       onChangePage(post){
+          const paramString = post.link.split('?')[1];
+          const queryString = new URLSearchParams(paramString);
+          this.params.page = queryString.get('page')
+      },
+    },
+
+  }
 </script>
