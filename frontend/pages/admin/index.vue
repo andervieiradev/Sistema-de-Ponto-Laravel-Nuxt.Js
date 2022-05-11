@@ -2,10 +2,6 @@
 <div class="py-12">
   <div class="max-w-7xl mx-auto px-2 sm:px-6 lg:px-8">
 
-      {{ $auth.user.scope }}
-      {{ $auth.hasScope('admin') }}
-      {{ $auth.hasScope('employee') }}
-
       <div>
           <div class="md:grid md:grid-cols-3 md:gap-6">
               <div class="md:col-span-1">

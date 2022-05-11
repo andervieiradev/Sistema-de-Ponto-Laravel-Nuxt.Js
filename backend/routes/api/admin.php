@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Admin\AuthController;
+use App\Http\Controllers\Admin\EmployeeController;
 use Illuminate\Support\Facades\Route;
 
 Route::prefix('admin')->group(function(){
@@ -12,6 +13,13 @@ Route::prefix('admin')->group(function(){
         Route::get('/me', [AuthController::class, 'me'])->name('me');
         Route::post('/changePassword', [AuthController::class, 'changePassword'])->name('changePassword');
 
+
+        Route::group(['prefix'=>'employee','as'=>'employee.'], function(){
+
+            Route::get('/', [EmployeeController::class, 'index'])->name('index');
+            // Route::post('/', [PointController::class, 'store'])->name('store');
+
+        });
 
     });
 

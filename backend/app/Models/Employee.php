@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -55,6 +56,7 @@ class Employee extends Authenticatable
         'birth_date' => 'datetime',
     ];
 
+    protected $appends = ['age'];
 
     protected function document(): Attribute
     {
@@ -72,6 +74,17 @@ class Employee extends Authenticatable
         );
     }
 
+    protected function age(): Attribute
+    {
+        return new Attribute(
+            get: fn ($value, $attributes) => Carbon::parse($attributes['birthday'])->diff(Carbon::now())->format('%y anos, %m meses e %d dias'),
+        );
+    }
+
+    public function admin()
+    {
+        return $this->belongsTo(Admin::class);
+    }
 
     public function point()
     {

@@ -27,6 +27,7 @@ export default {
     { src: '~/plugins/vue-toastification.js', mode: 'client'},
     { src: '~/plugins/moment.js'},
     { src: '~/plugins/vue-datepicker.js'},
+    { src: '~/plugins/lodash.js'},
   ],
 
   // Auto import components: https://go.nuxtjs.dev/config-components
