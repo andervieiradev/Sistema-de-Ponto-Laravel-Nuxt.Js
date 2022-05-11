@@ -23,7 +23,7 @@ class Employee extends Authenticatable
         'email',
         'password',
         'document',
-        'birth_date',
+        'birthday',
         'job_position',
         'cep',
         'street',
@@ -70,6 +70,12 @@ class Employee extends Authenticatable
             set: fn ($value) => preg_replace("/\D/", '', $value),
             get: fn ($value) =>  preg_replace("/(\d{5})(\d{3})/", "\$1-\$2", $value),
         );
+    }
+
+
+    public function point()
+    {
+        return $this->hasMany(Point::class);
     }
 
 }

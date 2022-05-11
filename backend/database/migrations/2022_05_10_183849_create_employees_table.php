@@ -23,7 +23,7 @@ return new class extends Migration
 
             $table->string('document')->unique();
             $table->string('password');
-            $table->timestamp('birth_date');
+            $table->timestamp('birthday');
 
             $table->string('cep');
             $table->string('street');

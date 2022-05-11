@@ -24,7 +24,7 @@ class EmployeeSeeder extends Seeder
             'password' => bcrypt('password'),
             'remember_token' => Str::random(10),
             'document' => '632.748.400-09',
-            'birth_date' => Carbon::createFromFormat('d/m/Y', '15/07/1995')->startOfDay(),
+            'birthday' => Carbon::createFromFormat('d/m/Y', '15/07/1995')->startOfDay(),
             'job_position' => 'Estágiario',
             'cep' => '89950000',
             'street' => 'Rua XYZ',
