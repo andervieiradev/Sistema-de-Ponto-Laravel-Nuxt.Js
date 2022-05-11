@@ -28,6 +28,7 @@ export default {
     { src: '~/plugins/moment.js'},
     { src: '~/plugins/vue-datepicker.js'},
     { src: '~/plugins/lodash.js'},
+    { src: '~/plugins/v-mask.js'},
   ],
 
   // Auto import components: https://go.nuxtjs.dev/config-components

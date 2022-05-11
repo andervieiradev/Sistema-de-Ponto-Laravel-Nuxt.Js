@@ -89,6 +89,9 @@
                                     </svg>
                                 </span>
                             </th>
+                            <th scope="col" class="w-3/12 font-bold text-sm font-medium employeeing-wider text-left text-white uppercase">
+                                <span class="inline-flex py-3 px-6 w-full justify-between">Administrador</span>
+                            </th>
 
                             <th scope="col" class="font-bold text-sm font-medium px-6 py-4 text-right"></th>
                         </tr>
@@ -112,6 +115,9 @@
                             </td>
                             <td class="text-md text-gray-900 font-medium px-6 py-4 whitespace-nowrap">
                                 {{ employee.age }}
+                            </td>
+                            <td class="text-md text-gray-900 font-medium px-6 py-4 whitespace-nowrap">
+                                {{ employee.admin.name }}
                             </td>
                             <td class="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap text-right">
                                 <button
@@ -184,14 +190,37 @@
        onChangePage(post){
           const paramString = post.link.split('?')[1];
           const queryString = new URLSearchParams(paramString);
-
           this.params.page = queryString.get('page')
-
       },
       sort(field) {
           this.params.field = field;
           this.params.direction = this.params.direction === 'asc' ? 'desc' : 'asc';
       },
+      deleteEmployee(employee){
+        this.$swal.fire({
+            title: 'Deletar Funcionário?',
+            text: "Tem certeza que deseja deletar esse funcionário?",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#d33',
+            cancelButtonColor: '#3085d6',
+            cancelButtonText: 'Cancelar',
+            confirmButtonText: 'Sim, Deletar!'
+        }).then( async (result) => {
+            if (result.isConfirmed) {
+              await this.$axios.delete(`/admin/employee/${employee.id}`)
+                .then(response => {
+                  this.$toast.success(response.data.message)
+
+                  const idx = this.employees.data.findIndex(o => o.id === employee.id);
+                  this.employees.data.splice(idx, 1);
+
+                }).catch(({ response }) => {
+                  this.$toast.error(response.data.message)
+                })
+            }
+        })
+      }
     },
 
   }

@@ -16,8 +16,12 @@ Route::prefix('admin')->group(function(){
 
         Route::group(['prefix'=>'employee','as'=>'employee.'], function(){
 
+            Route::get('/getCep/{cep}', [EmployeeController::class, 'getCep'])->name('getCep');
+
             Route::get('/', [EmployeeController::class, 'index'])->name('index');
-            // Route::post('/', [PointController::class, 'store'])->name('store');
+            Route::post('/', [EmployeeController::class, 'store'])->name('store');
+
+            Route::delete('/{employee}', [EmployeeController::class, 'destroy'])->name('destroy');
 
         });
 

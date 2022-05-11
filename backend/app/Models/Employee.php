@@ -53,7 +53,7 @@ class Employee extends Authenticatable
      */
     protected $casts = [
         'email_verified_at' => 'datetime',
-        'birth_date' => 'datetime',
+        'birthday' => 'datetime',
     ];
 
     protected $appends = ['age'];
@@ -71,6 +71,14 @@ class Employee extends Authenticatable
         return new Attribute(
             set: fn ($value) => preg_replace("/\D/", '', $value),
             get: fn ($value) =>  preg_replace("/(\d{5})(\d{3})/", "\$1-\$2", $value),
+        );
+    }
+
+    protected function birthday(): Attribute
+    {
+        return new Attribute(
+            set: fn ($value) => Carbon::createFromFormat('d/m/Y', $value)->startOfDay(),
+            get: fn ($value) => Carbon::parse($value)->format('d/m/Y'),
         );
     }
 
