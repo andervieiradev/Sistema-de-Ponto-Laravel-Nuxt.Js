@@ -45,8 +45,8 @@ export default {
   data() {
     return {
       form: {
-        email: 'teste@teste.com',
-        password: 'password',
+        email: '',
+        password: '',
         processing: false,
       },
       errors: null
