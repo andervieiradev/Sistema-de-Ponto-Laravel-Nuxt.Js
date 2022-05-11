@@ -13,7 +13,8 @@ class PointController extends Controller
 
     function index(Request $request)
     {
-        $points = Auth::guard('employees')->user()->point()->whereDate('point_date', $request->point_date ? Carbon::parse($request->point_date) : Carbon::today())->get();
+
+        $points = Auth::guard('employees')->user()->point()->whereDate('point_date', $request->pointDate ? Carbon::parse($request->pointDate) : Carbon::today())->get();
 
         if(!$points){
             return response()->json(['message' => 'Ops.. Aconteceu algum erro!'], 400);

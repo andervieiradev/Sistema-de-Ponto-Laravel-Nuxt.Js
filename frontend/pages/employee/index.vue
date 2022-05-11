@@ -30,11 +30,22 @@
           </div>
 
           <div class="md:grid md:grid-cols-4 md:gap-6">
+
             <div class="mt-5 md:mt-0 md:col-span-2">
-              <ListPoint :date="point_date" :points="points" />
+              Selecione a Data:
+              <Datepicker
+                v-model="point_date"
+                show-clear-button
+                :range="false"
+                type="datetime"
+                lang="pt-br"
+                format='dd-MMM-yyyy'
+                first-day-of-week="monday"
+                :date-format="{ day: '2-digit', month: '2-digit', year: 'numeric' }"
+               />
             </div>
             <div class="mt-5 md:mt-0 md:col-span-2">
-              <Calendar />
+              <ListPoint :date="filterDate" :points="points" />
             </div>
           </div>
       </div>
@@ -58,9 +69,21 @@ export default {
       return {
         hourReal: this.$moment().format("HH:mm:ss"),
         dateReal: this.$moment().format("DD/MM/YYYY"),
-        point_date: this.$moment().format("DD/MM/YYYY"),
-
+        point_date: new Date(),
       };
+  },
+  computed: {
+    filterDate(){
+      return this.$moment( this.point_date ).format("DD/MM/YYYY")
+    }
+  },
+  watch: {
+    filterDate: {
+      deep: true,
+      handler() {
+        this.onSyncWithFilterDateInPoints(this.point_date)
+      }
+    }
   },
   mounted() {
       setInterval(() => {
@@ -68,28 +91,33 @@ export default {
       }, 1000)
   },
   methods: {
+    async onSyncWithFilterDateInPoints(pointDate){
+        this.points = await this.$axios.$get('/employee/point', {
+          params: { pointDate }
+        })
+    },
     checkRegisterPoint(){
       this.$swal.fire({
-                title: 'Registrar Ponto?',
-                text: "Tem certeza que deseja registrar seu ponto agora?",
-                icon: 'warning',
-                showCancelButton: true,
-                confirmButtonColor: '#3085d6',
-                cancelButtonColor: '#d33',
-                cancelButtonText: 'Cancelar',
-                confirmButtonText: 'Sim, Registrar!'
-            }).then((result) => {
-                if (result.isConfirmed) {
-                  this.onRegisterPoint();
-                }
-            })
+          title: 'Registrar Ponto?',
+          text: "Tem certeza que deseja registrar seu ponto agora?",
+          icon: 'warning',
+          showCancelButton: true,
+          confirmButtonColor: '#3085d6',
+          cancelButtonColor: '#d33',
+          cancelButtonText: 'Cancelar',
+          confirmButtonText: 'Sim, Registrar!'
+      }).then((result) => {
+          if (result.isConfirmed) {
+            this.onRegisterPoint();
+          }
+      })
     },
     async onRegisterPoint(){
       await this.$axios.post('/employee/point')
         .then(response => {
-
           this.$toast.success(response.data.message)
-          this.points.push(response.data.point);
+
+          this.point_date = new Date()
 
         }).catch(({ response }) => {
           this.$toast.error(response.data.message)
