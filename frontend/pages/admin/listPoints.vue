@@ -4,10 +4,39 @@
 
       <div class="p-2 md:p-0">
         <div class="md:grid md:grid-cols-3 md:gap-6">
-          <div class="md:col-span-3">
-            <h1 class="  text-2xl font-medium">Últimos Pontos (todos)</h1>
-            <h2 class="mb-3 text-md font-normal">Todos os funcionários</h2>
 
+          <div class="mb-3 md:col-span-2">
+            <h1 class=" mb-3 text-2xl font-medium">Pontos dos Seus Funcionários Subordinados</h1>
+          </div>
+          <div class="mb-3 md:col-span-1 flex items-center">
+            <div class=" mt-5 md:mt-0 md:col-span-2 ">
+              Data Inicial:
+              <Datepicker
+                v-model="params.start_date"
+                :range="false"
+                type="datetime"
+                lang="pt-br"
+                format='dd-MMM-yyyy'
+                position="center"
+                first-day-of-week="monday"
+                :date-format="{ day: '2-digit', month: '2-digit', year: 'numeric' }"
+               />
+
+              Data Final:
+              <Datepicker
+                v-model="params.end_date"
+                :range="false"
+                type="datetime"
+                lang="pt-br"
+                format='dd-MMM-yyyy'
+                position="center"
+                first-day-of-week="monday"
+                :date-format="{ day: '2-digit', month: '2-digit', year: 'numeric' }"
+               />
+            </div>
+          </div>
+
+          <div class="col-span-3">
             <div class="bg-white overflow-auto shadow-xl rounded-lg scrollbar scrollbar-thin scrollbar-thumb-gray-400 scrollbar-track-gray-200 scrollbar-thumb-rounded scrollbar-thumb-rounded scrollbar-thumb-rounded-md">
                 <table class="min-w-full table-responsive">
                     <thead class="border-b bg-gradient-to-r from-cyan-500 to-blue-500" >
@@ -33,35 +62,34 @@
                         </tr>
                     </thead>
                     <tbody>
-                        <tr v-for="point in points.data" :key="point.id" class="border-b hover:bg-gray-100">
+                        <tr v-for="point in points" :key="point.id" class="border-b hover:bg-gray-100">
                             <td class="px-2 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
                                 {{ point.id }}
                             </td>
                             <td class="text-md text-gray-900 font-medium px-6 py-4 whitespace-nowrap">
-                                {{ point.employee.name }}
+                                {{ point.name }}
                             </td>
                             <td class="text-md text-gray-900 font-medium px-6 py-4 whitespace-nowrap">
-                                {{ point.employee.job_position }}
+                                {{ point.job }}
                             </td>
                             <td class="text-md text-gray-900 font-medium px-6 py-4 whitespace-nowrap">
-                                {{ point.employee.age }}
+                                {{ age(point.birthday) }}
                             </td>
                             <td class="text-md text-gray-900 font-medium px-6 py-4 whitespace-nowrap">
-                                {{ point.employee.admin.name }}
+                                {{ point.admin }}
                             </td>
                             <td class="text-md text-gray-900 font-medium px-6 py-4 whitespace-nowrap">
-                                {{ point.point_date }}
+                                {{ $moment( point.point_date ).format("DD/MM/YYYY HH:mm:ss") }}
                             </td>
                         </tr>
 
-                        <tr v-if="!points.data.length">
+                        <tr v-if="!points.length">
                             <td colspan="6" class="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap text-center"> Sem Dados </td>
                         </tr>
                     </tbody>
                 </table>
             </div>
 
-            <Pagination class="mt-10" :links="points.links" @changePage="onChangePage" />
           </div>
         </div>
       </div>
@@ -77,39 +105,40 @@
     layout: 'DashboardAdmin',
     async asyncData({ $axios }) {
       return {
-        points: await $axios.$get('/admin/point/listAll'),
+        points: await $axios.$get('/admin/point/listPoint'),
       }
     },
     data(){
       return {
         params: {
-          page: null,
+          start_date: new Date(),
+          end_date: new Date(),
         },
       }
     },
+
     watch: {
       params: {
           deep: true,
           handler: _.throttle(async function () {
               const params = _.pickBy(this.params)
-              this.points = await this.$axios.$get('/admin/point/listAll', {params})
+              this.points = await this.$axios.$get('/admin/point/listPoint', {params})
           }, 150),
       },
-      points: {
-        deep: true,
-        handler(){
-          this.params.page = this.points.current_page
-        }
+
+    },
+    methods:{
+      age(value){
+        const today = new Date();
+        const birthDate = new Date(value);
+        let age = today.getFullYear() - birthDate.getFullYear();
+        const m = today.getMonth() - birthDate.getMonth();
+          if (m < 0 || (m === 0 && today.getDate() < birthDate.getDate()))
+          {
+              age--;
+          }
+        return age + ' anos';
       }
-
     },
-    methods: {
-       onChangePage(post){
-          const paramString = post.link.split('?')[1];
-          const queryString = new URLSearchParams(paramString);
-          this.params.page = queryString.get('page')
-      },
-    },
-
   }
 </script>

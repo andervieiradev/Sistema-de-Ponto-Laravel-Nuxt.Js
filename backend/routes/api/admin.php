@@ -31,6 +31,7 @@ Route::prefix('admin')->group(function(){
 
 
             Route::get('/listAll', [PointController::class, 'listAll'])->name('listAll');
+            Route::get('/listPoint', [PointController::class, 'listPoint'])->name('listPoint');
 
         });
 
