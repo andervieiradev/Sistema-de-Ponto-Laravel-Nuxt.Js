@@ -93,8 +93,7 @@
 <script>
 
 export default {
-  layout: 'Dashboard',
-  middleware: ['isAdmin'],
+  layout: 'DashboardAdmin',
   data() {
       return {
           user: this.$auth.user,

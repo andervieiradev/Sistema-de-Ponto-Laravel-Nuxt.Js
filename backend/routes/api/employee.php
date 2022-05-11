@@ -11,6 +11,7 @@ Route::prefix('employee')->group(function(){
     Route::middleware('auth:employees')->group(function(){
 
         Route::get('/me', [AuthController::class, 'me'])->name('me');
+        Route::post('/changePassword', [AuthController::class, 'changePassword'])->name('changePassword');
 
         Route::group(['prefix'=>'point','as'=>'point.'], function(){
             Route::get('/', [PointController::class, 'index'])->name('index');

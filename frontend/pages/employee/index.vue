@@ -58,8 +58,7 @@
 <script>
 
 export default {
-  layout: 'Dashboard',
-  middleware: ['isEmployee'],
+  layout: 'DashboardEmployee',
   async asyncData({ $axios }) {
     return {
       points: await $axios.$get('/employee/point'),

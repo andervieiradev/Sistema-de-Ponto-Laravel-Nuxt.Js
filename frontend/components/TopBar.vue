@@ -52,10 +52,15 @@
                                 <span class="text-sm">{{ $auth.user.email }}</span>
                             </div>
                             <ul class="py-1">
-                                <li>
-                                    <a href="#" class="block hover:font-semibold py-2 px-4 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white">
+                                <li v-if="isAdmin">
+                                    <NuxtLink to="/admin/changePassword" class="block hover:font-semibold py-2 px-4 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white">
                                         Editar Senha
-                                    </a>
+                                    </NuxtLink>
+                                </li>
+                                <li v-if="isEmployee">
+                                    <NuxtLink to="/employee/changePassword" class="block hover:font-semibold py-2 px-4 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white">
+                                        Editar Senha
+                                    </NuxtLink>
                                 </li>
                             </ul>
                             <div class="py-1 hover:font-semibold ">
@@ -103,6 +108,9 @@ export default {
       user: this.$auth.user,
       showUserMenu: false,
       speakerInitials: '',
+      isAdmin: this.$auth.hasScope('admin'),
+      isEmployee: this.$auth.hasScope('employee'),
+
     }
   },
   mounted(){

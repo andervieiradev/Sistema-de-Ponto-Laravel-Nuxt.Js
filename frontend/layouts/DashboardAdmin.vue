@@ -3,7 +3,7 @@
     <TopBar @showMenu="isShowMenu()"  />
 
     <div class="flex h-full sm:h-screen pt-16">
-        <Sidebar :show-menu="showMenu" @showMenu="isShowMenu()"/>
+        <SidebarAdmin :show-menu="showMenu" @showMenu="isShowMenu()"/>
 
         <div class="bg-gray-100 bg-opacity-70 h-full max-h-fit w-full">
           <Nuxt />
@@ -15,7 +15,7 @@
 
 <script>
   export default {
-    middleware: 'auth',
+    middleware: ['auth', 'isAdmin'],
     data() {
         return {
             showMenu: false
