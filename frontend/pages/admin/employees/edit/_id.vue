@@ -6,19 +6,19 @@
           <div class="md:grid md:grid-cols-3 md:gap-6">
               <div class="md:col-span-1">
                   <div class="px-4 sm:px-0">
-                      <h3 class="text-lg font-medium leading-6 text-gray-900">Cadastrar Funcionário</h3>
-                      <p class="mt-1 text-sm text-gray-600">Você pode cadastrar os dados de um novo funcionário.</p>
+                      <h3 class="text-lg font-medium leading-6 text-gray-900">Editar Funcionário</h3>
+                      <p class="mt-1 text-sm text-gray-600">Você pode Editar os dados de um novo funcionário.</p>
                   </div>
               </div>
               <div class="mt-5 md:mt-0 md:col-span-2">
-                  <form method="POST" @submit.prevent="onStoreEmployee">
+                  <form method="POST" @submit.prevent="onUpdateEmployee">
                       <div class="shadow sm:rounded-md sm:overflow-hidden">
                       <div class="px-4 py-5 bg-white space-y-6 sm:p-6">
 
                         <div class="grid grid-cols-4 gap-2">
                           <InputBase v-model.trim="form.name" class="col-span-3" label="Nome" type="text" name="name" placeholder="Digite o Nome do seu Funcionário" :required="true" :error="errors.name" />
                           <InputBase v-model.trim="form.email" class="col-span-4" label="Email" type="email" name="email" placeholder="Digite o Email do seu Funcionário" :required="true" :error="errors.email" />
-                          <InputBase v-model.trim="form.password" class="col-span-2" label="Senha" type="password" name="password" placeholder="Digite o Senha do seu Funcionário" :required="true" :error="errors.password" />
+                          <InputBase v-model.trim="form.password" class="col-span-2" label="Senha" type="password" name="password" placeholder="Deixe em branco para não alterar" :required="false" :error="errors.password" />
                           <InputBase v-model.trim="form.document" v-mask="'###.###.###-##'" class="col-span-2" label="CPF" type="text" name="document" placeholder="Digite o CPF do seu Funcionário" :required="true" :error="errors.document" />
                           <InputBase v-model.trim="form.birthday" v-mask="'##/##/####'" class="col-span-2" label="Dat. Nascimento" type="text" name="birthday" placeholder="Digite a Dat. Nasciment do seu Funcionário" :required="true" :error="errors.birthday" />
                           <InputBase v-model.trim="form.job_position" class="col-span-2" label="Cargo" type="text" name="job_position" placeholder="Digite o Cargo do seu Funcionário" :required="true" :error="errors.job_position" />
@@ -38,7 +38,7 @@
                             type="submit"
                             class="inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-sky-600 hover:bg-sky-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-sky-500"
                              >
-                            Cadastrar
+                            Editar
                           </button>
                       </div>
                       </div>
@@ -54,25 +54,14 @@
 <script>
   export default {
     layout: 'DashboardAdmin',
+      async asyncData({ $axios, params }) {
+        return {
+          form: await $axios.$get(`/admin/employee/${params.id}`),
+        }
+      },
     data(){
       return {
         errors: [],
-        form: {
-          name: null,
-          email: null,
-          password: null,
-          document: null,
-          birthday: null,
-          job_position: null,
-          cep: null,
-          street: null,
-          number: null,
-          complement: null,
-          neighborhood: null,
-          city: null,
-          state: null,
-          country: null
-        },
         syncCorreios: false,
       }
     },
@@ -86,8 +75,8 @@
 
     },
     methods: {
-      async onStoreEmployee(){
-        await this.$axios.post('/admin/employee', this.form)
+      async onUpdateEmployee(){
+        await this.$axios.put(`/admin/employee/${this.form.id}`, this.form)
           .then(response => {
             this.$toast.success(response.data.message)
 
@@ -103,8 +92,6 @@
 
         await this.$axios.$get(`/admin/employee/getCep/${this.form.cep}`)
           .then(response => {
-
-
             this.form.neighborhood = response.bairro
             this.form.complement = response.complemento
             this.form.city = response.localidade

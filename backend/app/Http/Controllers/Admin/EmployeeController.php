@@ -64,12 +64,40 @@ class EmployeeController extends Controller
         return response()->json(['message' => 'Funcionário criado com sucesso!']);
     }
 
+    public function show(Employee $employee)
+    {
+        return $employee;
+    }
+
+    public function update(Employee $employee, Request $request)
+    {
+        $request->validate([
+            'name' => 'required|min:3',
+            'email' => 'required|email|unique:employees,email,'.$employee->id,
+            'password' => 'nullable|min:8',
+            'document' => 'required|cpf|unique:employees,document,'.$employee->id,
+            'birthday' => 'required|date_format:d/m/Y',
+            'job_position' => 'required|min:3',
+            'cep' => 'required|formato_cep',
+            'street' => 'required',
+            'number' => 'required',
+            'complement' => 'nullable',
+            'neighborhood' => 'required',
+            'city' => 'required',
+            'state' => 'required',
+            'country' => 'required'
+        ]);
+
+        $employee->update($request->all());
+
+        return response()->json(['message' => 'Funcionário editado com sucesso!']);
+    }
+
     public function destroy(Employee $employee)
     {
         $employee->delete();
         return response()->json(['message' => 'Funcionário Deletado com Sucesso!']);
     }
-
 
     public function getCep(Request $request)
     {

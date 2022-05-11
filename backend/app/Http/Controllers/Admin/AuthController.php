@@ -55,7 +55,7 @@ class AuthController extends Controller
             ]);
         }
 
-        $admin->password = bcrypt($request->password);
+        $admin->password = $request->password;
         $admin->save();
 
         return response()->json(['message' => 'Senha alterada com sucesso!']);

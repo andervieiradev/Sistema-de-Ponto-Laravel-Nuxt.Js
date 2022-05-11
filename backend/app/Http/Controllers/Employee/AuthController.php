@@ -54,7 +54,7 @@ class AuthController extends Controller
             ]);
         }
 
-        $employee->password = bcrypt($request->password);
+        $employee->password = $request->password;
         $employee->save();
 
         return response()->json(['message' => 'Senha alterada com sucesso!']);

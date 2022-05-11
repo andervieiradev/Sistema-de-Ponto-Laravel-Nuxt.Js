@@ -2,6 +2,8 @@
 
 namespace App\Models;
 
+
+use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\SoftDeletes;
@@ -43,6 +45,12 @@ class Admin extends Authenticatable
         'email_verified_at' => 'datetime',
     ];
 
+    protected function password(): Attribute
+    {
+        return new Attribute(
+            set: fn ($value) => bcrypt($value),
+        );
+    }
 
     public function employee()
     {

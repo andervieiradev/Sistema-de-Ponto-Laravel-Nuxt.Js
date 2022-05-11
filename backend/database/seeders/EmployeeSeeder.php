@@ -21,7 +21,7 @@ class EmployeeSeeder extends Seeder
             'name' => 'Teste',
             'email' => 'teste@teste.com',
             'email_verified_at' => now(),
-            'password' => bcrypt('password'),
+            'password' => 'password',
             'remember_token' => Str::random(10),
             'document' => '632.748.400-09',
             'birthday' => '15/07/1995',

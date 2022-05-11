@@ -59,6 +59,13 @@ class Employee extends Authenticatable
 
     protected $appends = ['age'];
 
+    protected function password(): Attribute
+    {
+        return new Attribute(
+            set: fn ($value) => bcrypt($value),
+        );
+    }
+
     protected function document(): Attribute
     {
         return new Attribute(
