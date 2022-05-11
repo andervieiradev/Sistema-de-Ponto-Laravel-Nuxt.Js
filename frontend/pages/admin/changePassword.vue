@@ -65,7 +65,7 @@
 <script>
 
 export default {
-  layout: 'DashboardEmployee',
+  layout: 'DashboardAdmin',
   data() {
       return {
         form: {
@@ -78,7 +78,7 @@ export default {
   },
   methods:{
     async onChangePassword(){
-      await this.$axios.post('/employee/changePassword', this.form)
+      await this.$axios.post('/admin/changePassword', this.form)
       .then(response => {
 
           this.form.old_password = null;

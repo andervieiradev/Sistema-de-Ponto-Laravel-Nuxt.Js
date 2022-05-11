@@ -10,6 +10,8 @@ Route::prefix('admin')->group(function(){
     Route::middleware('auth:admins')->group(function(){
 
         Route::get('/me', [AuthController::class, 'me'])->name('me');
+        Route::post('/changePassword', [AuthController::class, 'changePassword'])->name('changePassword');
+
 
     });
 

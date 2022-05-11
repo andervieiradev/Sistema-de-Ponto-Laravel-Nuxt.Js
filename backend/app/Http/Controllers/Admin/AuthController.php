@@ -39,4 +39,27 @@ class AuthController extends Controller
             'user' => $admin,
         ]);
     }
+
+    public function changePassword(Request $request)
+    {
+        $request->validate([
+            'old_password' => 'required',
+            'password' => 'required|min:8|confirmed'
+        ]);
+
+        $admin = Admin::find(Auth::guard('admins')->user()->id);
+
+        if (!Hash::check($request->old_password, $admin->password)) {
+            throw ValidationException::withMessages([
+                'message' => ['Senha atual não confere!'],
+            ]);
+        }
+
+        $admin->password = bcrypt($request->password);
+        $admin->save();
+
+        return response()->json(['message' => 'Senha alterada com sucesso!']);
+    }
+
+
 }
