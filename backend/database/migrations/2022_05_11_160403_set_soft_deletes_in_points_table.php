@@ -13,12 +13,8 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('points', function (Blueprint $table) {
-            $table->id();
-            $table->dateTime('point_date');
-            $table->foreignId('employee_id')->constrained('employees')->onDelete('cascade')->onUpdate('cascade');
-            $table->timestamps();
-
+        Schema::table('points', function (Blueprint $table) {
+            $table->softDeletes();
         });
     }
 
@@ -29,6 +25,8 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('points');
+        Schema::table('points', function (Blueprint $table) {
+            $table->dropSoftDeletes();
+        });
     }
 };
