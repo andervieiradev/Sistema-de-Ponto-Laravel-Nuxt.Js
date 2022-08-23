@@ -10,7 +10,7 @@ Requisitos:
 - Node e NPM
 
 ```
-    git clone https://github.com/andervieiradev/Sistema-de-Ponto.git
+    git clone https://github.com/andervieiradev/Sistema-de-Ponto-Laravel-Nuxt.Js-.git
 
     dentro das pastas backend e frontend copiar o arquivo .env.example para .env e efetuar o preenchimento dos dados locais da maquina
 
