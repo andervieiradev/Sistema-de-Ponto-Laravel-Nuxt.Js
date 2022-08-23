@@ -1,4 +1,4 @@
-Projeto elaborado para o Teste Técnico da Ticto.
+Projeto elaborado para o Teste Técnico de PHP/Laravel.
 
 O projeto elaborado em duas partes.
 1º Backend - API em Laravel
@@ -10,7 +10,7 @@ Requisitos:
 - Node e NPM
 
 ```
-    git clone https://andervieiradev@bitbucket.org/andervieiradev/teste-ticto.git
+    git clone https://github.com/andervieiradev/Sistema-de-Ponto.git
 
     dentro das pastas backend e frontend copiar o arquivo .env.example para .env e efetuar o preenchimento dos dados locais da maquina
 
@@ -20,7 +20,7 @@ Requisitos:
     - php artisan migrate
     - php artisan db:seed
     
-    abre outro terminal na pasta frontend e roda:
+    abre outro terminal na pasta frontend e rode os seguintes comandos:
     - npm install
     - npm run dev 
     
@@ -30,7 +30,7 @@ Requisitos:
         admin2@teste.com
         admin3@teste.com
 
-        as senhas são: password
+        as senhas padrões são: password
     
-    Irá criar alguns funcionários com emails rondômicos
+    Irá criar alguns funcionários com emails randômicos
 ```
