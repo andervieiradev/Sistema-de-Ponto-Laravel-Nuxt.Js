@@ -5,6 +5,10 @@ use App\Http\Controllers\Admin\EmployeeController;
 use App\Http\Controllers\Admin\PointController;
 use Illuminate\Support\Facades\Route;
 
+Route::get('/', function(){
+    return 'olá, mundo!';
+});
+
 Route::prefix('admin')->group(function(){
 
     Route::post('/login', [AuthController::class, 'login'])->name('login');
