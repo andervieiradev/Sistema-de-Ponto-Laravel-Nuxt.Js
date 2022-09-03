@@ -7,7 +7,7 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/', function(){
     return 'olá, mundo!';
-});
+})->name('hello');
 
 Route::prefix('admin')->group(function(){
 
